@@ -12,7 +12,6 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 app.use(express.json())
-
 const cors = require('cors')
 const AddressModel = require('./model/address.model')
 const WishlistModel = require('./model/wishlist.model')
@@ -239,8 +238,9 @@ return res.status(409).json({error:"Email Already Regsiterd"})
 //login user
 
 app.post('/api/users/login',async (req, res) => {
-  const {email,password} = req.body
+  const { email, password } = req.body
   try {
+
     const user =await UserModel.findOne({email})
 
     if (!user)
@@ -249,7 +249,7 @@ app.post('/api/users/login',async (req, res) => {
     }
 
     const isMatch = await bcrypt.compare(password, user.password)
-    
+
     if (!isMatch)
     {
       return res.status(401).json({error:'Creadential Incorrect'})
